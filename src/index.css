@@ -1,13 +1,14 @@
+@font-face {
+  font-family: "Helvetica-Neue";
+  src: url("../src/assets/fonts/HelveticaNeue.ttf");
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-@font-face {
   font-family: "Helvetica-Neue";
-  src: url("../src/assets/fonts/HelveticaNeue Medium.ttf");
 }
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
