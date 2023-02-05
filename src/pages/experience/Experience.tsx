@@ -53,6 +53,7 @@ const Experience = () => {
             placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
           ></input>
         </div>
+
         <div className="h-1 my-10 bg-[#C1C1C1]"></div>
 
         <div>
