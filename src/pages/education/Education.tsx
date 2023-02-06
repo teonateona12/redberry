@@ -39,7 +39,7 @@ const Education = () => {
           <label>აღწერა</label>
           <input
             className="w-full pl-2 pt-2 pb-24 border-2 border-[#BCBCBC] rounded"
-            placeholder="განათლების აღწერა"
+            placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
           ></input>
         </div>
 
@@ -47,7 +47,7 @@ const Education = () => {
 
         <div>
           <button className="bg-[#62A1EB] rounded px-4 py-3 text-white">
-            სხვა სასწავლებლის დამატება
+            მეტი გამოცდილების დამატება
           </button>
         </div>
 
@@ -56,7 +56,7 @@ const Education = () => {
             ᲣᲙᲐᲜ
           </button>
           <button className="bg-[#6B40E3] px-7 py-3 text-white rounded">
-            ᲨᲔᲛᲓᲔᲒᲘ
+            ᲓᲐᲡᲠᲣᲚᲔᲑᲐ
           </button>
         </div>
       </form>

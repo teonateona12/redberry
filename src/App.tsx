@@ -7,6 +7,13 @@ import Personal from "./pages/personal/Personal";
 import Resume from "./pages/resume/Resume";
 
 function App() {
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    about: "",
+    email: "",
+    number: "",
+  });
   return (
     <div>
       <Routes>

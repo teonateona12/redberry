@@ -66,6 +66,7 @@ const Experience = () => {
           <button className="bg-[#6B40E3] px-7 py-3 text-white rounded">
             ᲣᲙᲐᲜ
           </button>
+
           <button className="bg-[#6B40E3] px-7 py-3 text-white rounded">
             ᲨᲔᲛᲓᲔᲒᲘ
           </button>
