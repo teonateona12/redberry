@@ -1,12 +1,17 @@
 import React from "react";
 import email from "../assets/images/email.svg";
 import number from "../assets/images/number.svg";
-import { ExperienceData, PersonalInformation } from "../types";
+import { EducationData, ExperienceData, PersonalInformation } from "../types";
 type ResumeType = {
   data: PersonalInformation;
   experienceData: ExperienceData;
+  educationData: EducationData;
 };
-const PageResume: React.FC<ResumeType> = ({ data, experienceData }) => {
+const PageResume: React.FC<ResumeType> = ({
+  data,
+  experienceData,
+  educationData,
+}) => {
   return (
     <div className="px-20 py-16">
       <h1 className="text-[#F93B1D] text-3xl font-bold">
@@ -41,6 +46,17 @@ const PageResume: React.FC<ResumeType> = ({ data, experienceData }) => {
         </div>
       )}
       <p>{experienceData.description}</p>
+      <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+      {educationData.university !== "" && (
+        <div className="flex flex-col mt-5">
+          <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
+          <p className="text-[#1A1A1A] mt-3 font-bold">
+            {educationData.university}
+          </p>
+          <p>{educationData.universityEnd}</p>
+        </div>
+      )}
+      <p>{educationData.educationDesc}</p>
     </div>
   );
 };

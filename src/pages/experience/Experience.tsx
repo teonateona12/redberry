@@ -4,7 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import error from "../../assets/images/error.svg";
 import succes from "../../assets/images/succes.svg";
-import { ExperienceData, PersonalInformation } from "../../types";
+import {
+  EducationData,
+  ExperienceData,
+  PersonalInformation,
+} from "../../types";
 import PageResume from "../../components/PageResume";
 import { experienceScheme } from "../../schemas/experienseScema";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +16,13 @@ interface ExperienseTypes {
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
   experienceData: ExperienceData;
   data: PersonalInformation;
+  educationData: EducationData;
 }
 const Experience: React.FC<ExperienseTypes> = ({
   data,
   setExperienceData,
   experienceData,
+  educationData,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -194,7 +200,11 @@ const Experience: React.FC<ExperienseTypes> = ({
           </div>
         </form>
       </div>
-      <PageResume data={data} experienceData={experienceData} />
+      <PageResume
+        data={data}
+        experienceData={experienceData}
+        educationData={educationData}
+      />
     </div>
   );
 };

@@ -210,7 +210,11 @@ const Education: React.FC<educationData> = ({
           </div>
         </form>
       </div>
-      <PageResume data={data} experienceData={experienceData} />
+      <PageResume
+        data={data}
+        experienceData={experienceData}
+        educationData={educationData}
+      />
     </div>
   );
 };

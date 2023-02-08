@@ -61,6 +61,7 @@ function App() {
               data={data}
               experienceData={experienceData}
               setData={setData}
+              educationData={educationData}
             />
           }
         />
@@ -71,6 +72,7 @@ function App() {
               data={data}
               experienceData={experienceData}
               setExperienceData={setExperienceData}
+              educationData={educationData}
             />
           }
         />
