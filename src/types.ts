@@ -4,5 +4,12 @@ export interface PersonalInformation {
   about?: string;
   email: string;
   number: string;
-  image: File | null;
+  image?: File | null;
+}
+export interface ExperienceData {
+  position: string;
+  description: string;
+  employer: string;
+  startTime: string;
+  endTime: string;
 }

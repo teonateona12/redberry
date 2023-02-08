@@ -15,5 +15,5 @@ export const personalSchema = z.object({
     .min(2)
     .regex(/^\+995\s5\d{2}\s\d{2}\s\d{2}\s\d{2}$/),
   about: z.string().optional(),
-  image: z.instanceof(File),
+  image: z.any(),
 });

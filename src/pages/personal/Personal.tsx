@@ -10,7 +10,6 @@ import PageResume from "../../components/PageResume";
 import { personalSchema } from "../../schemas/personalSchema";
 import { useNavigate } from "react-router-dom";
 
-type PersonalSchema = z.infer<typeof personalSchema>;
 interface DataTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
@@ -25,14 +24,13 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<PersonalSchema>({
+  } = useForm<PersonalInformation>({
     resolver: zodResolver(personalSchema),
   });
   const saveData = () => {
     const values: PersonalInformation = getValues();
-
     setData(values);
-    localStorage.setItem("Data", JSON.stringify(values));
+    localStorage.setItem("PersonalData", JSON.stringify(values));
   };
 
   const clickButton = () => {
@@ -44,7 +42,7 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
   };
 
   useEffect(() => {
-    const getItem = localStorage.getItem("Data" || "");
+    const getItem = localStorage.getItem("PersonalData" || "");
     if (getItem) {
       const parse = JSON.parse(getItem);
       setData(parse);
