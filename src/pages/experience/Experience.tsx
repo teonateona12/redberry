@@ -2,7 +2,6 @@ import PageInformation from "../../components/PageInformation";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import error from "../../assets/images/error.svg";
 import succes from "../../assets/images/succes.svg";
 import { ExperienceData, PersonalInformation } from "../../types";
@@ -35,12 +34,10 @@ const Experience: React.FC<ExperienseTypes> = ({
     setExperienceData(values);
     localStorage.setItem("ExperienceData", JSON.stringify(values));
   };
-  console.log(data);
   const clickButton = () => {
     setClick(true);
   };
   const onSubmit: SubmitHandler<ExperienceData> = (data) => {
-    console.log(data);
     navigate("/education");
   };
 
@@ -197,7 +194,7 @@ const Experience: React.FC<ExperienseTypes> = ({
           </div>
         </form>
       </div>
-      <PageResume data={data} />
+      <PageResume data={data} experienceData={experienceData} />
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import email from "../assets/images/email.svg";
 import number from "../assets/images/number.svg";
-import { PersonalInformation } from "../types";
-import { useEffect } from "react";
+import { ExperienceData, PersonalInformation } from "../types";
 type ResumeType = {
   data: PersonalInformation;
+  experienceData: ExperienceData;
 };
-const PageResume: React.FC<ResumeType> = ({ data }) => {
+const PageResume: React.FC<ResumeType> = ({ data, experienceData }) => {
   return (
     <div className="px-20 py-16">
       <h1 className="text-[#F93B1D] text-3xl font-bold">

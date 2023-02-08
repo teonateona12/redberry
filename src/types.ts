@@ -13,3 +13,10 @@ export interface ExperienceData {
   startTime: string;
   endTime: string;
 }
+
+export interface EducationData {
+  university: string;
+  degree: string;
+  universityEnd: string;
+  educationDesc: string;
+}

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import error from "../../assets/images/error.svg";
 import succes from "../../assets/images/succes.svg";
-import { PersonalInformation } from "../../types";
+import { ExperienceData, PersonalInformation } from "../../types";
 import PageResume from "../../components/PageResume";
 import { personalSchema } from "../../schemas/personalSchema";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,10 @@ import { useNavigate } from "react-router-dom";
 interface DataTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
+  experienceData: ExperienceData;
 }
 
-const Personal: React.FC<DataTypes> = ({ setData, data }) => {
+const Personal: React.FC<DataTypes> = ({ setData, data, experienceData }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
   const {
@@ -37,7 +38,6 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
     setClick(true);
   };
   const onSubmit: SubmitHandler<PersonalInformation> = (data) => {
-    console.log(data);
     navigate("/experience");
   };
 
@@ -222,7 +222,7 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
           </div>
         </form>
       </div>
-      <PageResume data={data} />
+      <PageResume data={data} experienceData={experienceData} />
     </div>
   );
 };
