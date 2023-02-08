@@ -16,7 +16,6 @@ function App() {
     number: "",
     image: null,
   });
-  console.log(data);
 
   return (
     <div>
@@ -24,7 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route
           path="/personal"
-          element={<Personal setData={setData} data={data} />}
+          element={<Personal data={data} setData={setData} />}
         />
         <Route path="/experience" element={<Experience />} />
         <Route path="/education" element={<Education />} />

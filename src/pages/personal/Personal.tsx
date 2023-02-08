@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageInformation from "../../components/PageInformation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,45 +7,55 @@ import error from "../../assets/images/error.svg";
 import succes from "../../assets/images/succes.svg";
 import { PersonalInformation } from "../../types";
 import PageResume from "../../components/PageResume";
+import { personalSchema } from "../../schemas/personalSchema";
+import { useNavigate } from "react-router-dom";
 
-const validationSchema = z.object({
-  firstName: z
-    .string()
-    .min(2)
-    .regex(/^[ა-ჰ]+$/g),
-  lastName: z
-    .string()
-    .min(2)
-    .regex(/^[ა-ჰ]+$/g),
-  email: z.string().endsWith("@redberry.ge"),
-  number: z
-    .string()
-    .min(2)
-    .regex(/^\+995\s5\d{2}\s\d{2}\s\d{2}\s\d{2}$/),
-  about: z.string().optional(),
-});
-type ValidationSchema = z.infer<typeof validationSchema>;
+type PersonalSchema = z.infer<typeof personalSchema>;
 interface DataTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
 }
 
 const Personal: React.FC<DataTypes> = ({ setData, data }) => {
+  const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
-  } = useForm<ValidationSchema>({
-    resolver: zodResolver(validationSchema),
+  } = useForm<PersonalSchema>({
+    resolver: zodResolver(personalSchema),
   });
+  const saveData = () => {
+    const values: PersonalInformation = getValues();
+
+    setData(values);
+    localStorage.setItem("Data", JSON.stringify(values));
+  };
+
   const clickButton = () => {
     setClick(true);
   };
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
+  const onSubmit: SubmitHandler<PersonalInformation> = (data) => {
     console.log(data);
+    navigate("/experience");
   };
 
+  useEffect(() => {
+    const getItem = localStorage.getItem("Data" || "");
+    if (getItem) {
+      const parse = JSON.parse(getItem);
+      setData(parse);
+      setValue("firstName", parse.firstName);
+      setValue("lastName", parse.lastName);
+      setValue("image", parse.image);
+      setValue("about", parse.about);
+      setValue("email", parse.email);
+      setValue("number", parse.number);
+    }
+  }, []);
   return (
     <div className="flex">
       <div className="w-7/12">
@@ -70,12 +80,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
                     errors.firstName ? "border-[#EF5050]" : "border-[#BCBCBC]"
                   }	 rounded`}
                   placeholder="ანზორ"
-                  {...register("firstName")}
-                  onChange={(e) =>
-                    setData((user) => {
-                      return { ...user, firstName: e.target.value };
-                    })
-                  }
+                  {...register("firstName", {
+                    onChange: () => saveData(),
+                  })}
                 ></input>
                 <div className="items-center flex">
                   {!errors.firstName && click && (
@@ -104,12 +111,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
                     errors.lastName ? "border-[#EF5050]" : "border-[#BCBCBC]"
                   }	 rounded`}
                   placeholder="მუმლაძე"
-                  {...register("lastName")}
-                  onChange={(e) =>
-                    setData((user) => {
-                      return { ...user, lastName: e.target.value };
-                    })
-                  }
+                  {...register("lastName", {
+                    onChange: () => saveData(),
+                  })}
                 ></input>
                 <div className="items-center flex">
                   {!errors.lastName && click && (
@@ -131,6 +135,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
               className="file:bg-[#0E80BF] file:border-0 file:px-4 file:rounded file:text-white"
               type="file"
               placeholder="ატვირთვა"
+              {...register("image", {
+                onChange: () => saveData(),
+              })}
             ></input>
           </div>
 
@@ -139,12 +146,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
             <input
               className="w-full pl-2 pt-2 pb-28 border-2 border-[#BCBCBC] rounded"
               placeholder="ზოგადი ინფო შენ შესახებ"
-              {...register("about")}
-              onChange={(e) =>
-                setData((user) => {
-                  return { ...user, about: e.target.value };
-                })
-              }
+              {...register("about", {
+                onChange: () => saveData(),
+              })}
             ></input>
           </div>
 
@@ -163,12 +167,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
                 }	 rounded`}
                 placeholder="anzorr666@redberry.ge"
                 type="email"
-                {...register("email")}
-                onChange={(e) =>
-                  setData((user) => {
-                    return { ...user, email: e.target.value };
-                  })
-                }
+                {...register("email", {
+                  onChange: () => saveData(),
+                })}
               ></input>
               <div className="items-center flex">
                 {!errors.email && click && (
@@ -197,12 +198,9 @@ const Personal: React.FC<DataTypes> = ({ setData, data }) => {
                   errors.number ? "border-[#EF5050]" : "border-[#BCBCBC]"
                 }	 rounded`}
                 placeholder="+995 551 12 34 56"
-                {...register("number")}
-                onChange={(e) =>
-                  setData((user) => {
-                    return { ...user, number: e.target.value };
-                  })
-                }
+                {...register("number", {
+                  onChange: () => saveData(),
+                })}
               ></input>
               <div className="items-center flex">
                 {!errors.number && click && (

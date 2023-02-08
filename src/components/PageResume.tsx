@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import email from "../assets/images/email.svg";
 import number from "../assets/images/number.svg";
+import { PersonalInformation } from "../types";
+import { useEffect } from "react";
 
 const PageResume = ({ data }: any) => {
   return (
@@ -8,7 +10,7 @@ const PageResume = ({ data }: any) => {
       <h1 className="text-[#F93B1D] text-3xl font-bold">
         {data.firstName + " " + data.lastName}
       </h1>
-      {data.email !== "" && (
+      {data?.email !== "" && (
         <div className="flex gap-2 mt-5">
           <img src={email} />
           <p>{data.email}</p>
