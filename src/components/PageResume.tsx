@@ -30,6 +30,17 @@ const PageResume: React.FC<ResumeType> = ({ data, experienceData }) => {
           <p>{data.about}</p>
         </div>
       )}
+      <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+      {experienceData.position !== "" && (
+        <div className="flex flex-col mt-5">
+          <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
+          <p className="text-[#1A1A1A] mt-3 font-bold">
+            {experienceData.position}
+          </p>
+          <p>{experienceData.startTime + " " + experienceData.endTime}</p>
+        </div>
+      )}
+      <p>{experienceData.description}</p>
     </div>
   );
 };
