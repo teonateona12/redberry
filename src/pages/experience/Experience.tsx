@@ -13,16 +13,20 @@ import PageResume from "../../components/PageResume";
 import { experienceScheme } from "../../schemas/experienseScema";
 import { useNavigate } from "react-router-dom";
 interface ExperienseTypes {
-  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
-  experienceData: ExperienceData;
+  setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
+  experienceData: ExperienceData;
   educationData: EducationData;
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
 }
 const Experience: React.FC<ExperienseTypes> = ({
+  setData,
   data,
-  setExperienceData,
   experienceData,
   educationData,
+  setEducationData,
+  setExperienceData,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -62,7 +66,12 @@ const Experience: React.FC<ExperienseTypes> = ({
   return (
     <div className="flex">
       <div className="w-7/12">
-        <PageInformation info={{ text: "ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ", number: "2" }} />
+        <PageInformation
+          info={{ text: "ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ", number: "2" }}
+          setData={setData}
+          setExperienceData={setExperienceData}
+          setEducationData={setEducationData}
+        />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="pl-28 pr-16 flex flex-col gap-6"
@@ -129,25 +138,35 @@ const Experience: React.FC<ExperienseTypes> = ({
 
           <div className="flex  gap-10">
             <div className="flex flex-col gap-2 w-full">
-              <label>დაწყების რიცხვი</label>
-              <input
-                type="date"
-                className="px-2 py-3 w-full border-2 border-[#BCBCBC] rounded"
-                {...register("startTime", {
-                  onChange: () => saveData(),
-                })}
-              ></input>
+              <div className="flex">
+                <div>
+                  <label>დაწყების რიცხვი</label>
+                  <input
+                    type="date"
+                    className="px-2 py-3 w-full border-2 border-[#BCBCBC] rounded"
+                    {...register("startTime", {
+                      onChange: () => saveData(),
+                    })}
+                  ></input>
+                </div>
+                {<img src={errors.startTime && `${error}`} />}
+              </div>
             </div>
 
             <div className="flex flex-col gap-2 w-full">
-              <label>დამთავრების რიცხვი</label>
-              <input
-                type="date"
-                className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
-                {...register("endTime", {
-                  onChange: () => saveData(),
-                })}
-              ></input>
+              <div className="flex">
+                <div>
+                  <label>დამთავრების რიცხვი</label>
+                  <input
+                    type="date"
+                    className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
+                    {...register("endTime", {
+                      onChange: () => saveData(),
+                    })}
+                  ></input>
+                </div>
+                {<img src={errors.endTime && `${error}`} />}
+              </div>
             </div>
           </div>
 
@@ -187,7 +206,10 @@ const Experience: React.FC<ExperienseTypes> = ({
           </div>
 
           <div className="flex justify-between mt-24">
-            <button className="bg-[#6B40E3] px-7 py-3 text-white rounded">
+            <button
+              onClick={() => navigate("/personal")}
+              className="bg-[#6B40E3] px-7 py-3 text-white rounded"
+            >
               ᲣᲙᲐᲜ
             </button>
 

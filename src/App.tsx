@@ -61,6 +61,8 @@ function App() {
               data={data}
               experienceData={experienceData}
               setData={setData}
+              setEducationData={setEducationData}
+              setExperienceData={setExperienceData}
               educationData={educationData}
             />
           }
@@ -71,6 +73,8 @@ function App() {
             <Experience
               data={data}
               experienceData={experienceData}
+              setData={setData}
+              setEducationData={setEducationData}
               setExperienceData={setExperienceData}
               educationData={educationData}
             />
@@ -82,8 +86,10 @@ function App() {
             <Education
               data={data}
               experienceData={experienceData}
-              educationData={educationData}
+              setData={setData}
               setEducationData={setEducationData}
+              setExperienceData={setExperienceData}
+              educationData={educationData}
             />
           }
         />

@@ -14,16 +14,20 @@ import {
 } from "../../types";
 import { educationScheme } from "../../schemas/educationSchema";
 type educationData = {
+  setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
   experienceData: ExperienceData;
   educationData: EducationData;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
 };
 const Education: React.FC<educationData> = ({
+  setData,
   data,
   experienceData,
   educationData,
   setEducationData,
+  setExperienceData,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -64,7 +68,12 @@ const Education: React.FC<educationData> = ({
   return (
     <div className="flex">
       <div className="w-7/12">
-        <PageInformation info={{ text: "ᲒᲐᲜᲐᲗᲚᲔᲑᲐ", number: "3" }} />
+        <PageInformation
+          info={{ text: "ᲒᲐᲜᲐᲗᲚᲔᲑᲐ", number: "3" }}
+          setData={setData}
+          setExperienceData={setExperienceData}
+          setEducationData={setEducationData}
+        />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="pl-28 pr-16 flex flex-col gap-6"
@@ -198,7 +207,10 @@ const Education: React.FC<educationData> = ({
           </div>
 
           <div className="flex justify-between mt-24">
-            <button className="bg-[#6B40E3] px-7 py-3 text-white rounded">
+            <button
+              onClick={() => navigate("/experience")}
+              className="bg-[#6B40E3] px-7 py-3 text-white rounded"
+            >
               ᲣᲙᲐᲜ
             </button>
             <button

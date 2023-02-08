@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PageInformation from "../../components/PageInformation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import error from "../../assets/images/error.svg";
 import succes from "../../assets/images/succes.svg";
 import {
@@ -19,6 +18,8 @@ interface DataTypes {
   data: PersonalInformation;
   experienceData: ExperienceData;
   educationData: EducationData;
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
 }
 
 const Personal: React.FC<DataTypes> = ({
@@ -26,6 +27,8 @@ const Personal: React.FC<DataTypes> = ({
   data,
   experienceData,
   educationData,
+  setEducationData,
+  setExperienceData,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -38,6 +41,7 @@ const Personal: React.FC<DataTypes> = ({
   } = useForm<PersonalInformation>({
     resolver: zodResolver(personalSchema),
   });
+
   const saveData = () => {
     const values: PersonalInformation = getValues();
     setData(values);
@@ -67,7 +71,12 @@ const Personal: React.FC<DataTypes> = ({
   return (
     <div className="flex">
       <div className="w-7/12">
-        <PageInformation info={{ text: "ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ", number: "1" }} />
+        <PageInformation
+          info={{ text: "ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ", number: "1" }}
+          setData={setData}
+          setExperienceData={setExperienceData}
+          setEducationData={setEducationData}
+        />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="pl-28 pr-16 flex flex-col gap-6"
