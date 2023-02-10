@@ -20,6 +20,8 @@ interface DataTypes {
   educationData: EducationData;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  imageDataUri: string;
+  setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Personal: React.FC<DataTypes> = ({
@@ -29,6 +31,8 @@ const Personal: React.FC<DataTypes> = ({
   educationData,
   setEducationData,
   setExperienceData,
+  imageDataUri,
+  setImageDataUri,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -51,9 +55,6 @@ const Personal: React.FC<DataTypes> = ({
   const clickButton = () => {
     setClick(true);
   };
-  const onSubmit: SubmitHandler<PersonalInformation> = (data) => {
-    navigate("/experience");
-  };
 
   useEffect(() => {
     const getItem = localStorage.getItem("PersonalData" || "");
@@ -62,12 +63,29 @@ const Personal: React.FC<DataTypes> = ({
       setData(parse);
       setValue("firstName", parse.firstName);
       setValue("lastName", parse.lastName);
-      setValue("image", parse.image);
       setValue("about", parse.about);
       setValue("email", parse.email);
       setValue("number", parse.number);
     }
   }, []);
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      localStorage.setItem("image", reader.result as string);
+      setImageDataUri(reader.result as string);
+    };
+  };
+  const onSubmit: SubmitHandler<PersonalInformation> = () => {
+    if (!imageDataUri) {
+      return;
+    }
+    navigate("/experience");
+  };
   return (
     <div className="flex">
       <div className="w-7/12">
@@ -76,6 +94,7 @@ const Personal: React.FC<DataTypes> = ({
           setData={setData}
           setExperienceData={setExperienceData}
           setEducationData={setEducationData}
+          setImageDataUri={setImageDataUri}
         />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -148,13 +167,17 @@ const Personal: React.FC<DataTypes> = ({
 
           <div className="flex my-5 gap-5">
             <p>პირადი ფოტოს ატვირთვა</p>
+            <label
+              htmlFor="files"
+              className="bg-[#0E80BF] border-0 px-4 rounded text-white"
+            >
+              ატვირთვა
+            </label>
             <input
-              className="file:bg-[#0E80BF] file:border-0 file:px-4 file:rounded file:text-white"
+              id="files"
+              onChange={handleImageUpload}
+              className="hidden"
               type="file"
-              placeholder="ატვირთვა"
-              {...register("image", {
-                onChange: () => saveData(),
-              })}
             ></input>
           </div>
 
@@ -245,6 +268,7 @@ const Personal: React.FC<DataTypes> = ({
         data={data}
         experienceData={experienceData}
         educationData={educationData}
+        imageDataUri={imageDataUri}
       />
     </div>
   );

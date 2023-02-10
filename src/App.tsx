@@ -8,6 +8,7 @@ import Resume from "./pages/resume/Resume";
 import { EducationData, ExperienceData, PersonalInformation } from "./types";
 
 function App() {
+  const [imageDataUri, setImageDataUri] = useState<string>("");
   const [data, setData] = useState<PersonalInformation>({
     firstName: "",
     lastName: "",
@@ -35,21 +36,22 @@ function App() {
       const parse = JSON.parse(getItem);
       setData(parse);
     }
-  }, []);
-  useEffect(() => {
-    const getItem = localStorage.getItem("ExperienceData" || "");
-    if (getItem) {
-      const parse = JSON.parse(getItem);
+    const getImage = localStorage.getItem("image" || "");
+    if (getImage) {
+      setImageDataUri(getImage);
+    }
+    const getExperience = localStorage.getItem("ExperienceData" || "");
+    if (getExperience) {
+      const parse = JSON.parse(getExperience);
       setExperienceData(parse);
     }
-  }, []);
-  useEffect(() => {
-    const getItem = localStorage.getItem("EducationData" || "");
-    if (getItem) {
-      const parse = JSON.parse(getItem);
+    const getEducation = localStorage.getItem("EducationData" || "");
+    if (getEducation) {
+      const parse = JSON.parse(getEducation);
       setEducationData(parse);
     }
   }, []);
+
   return (
     <div>
       <Routes>
@@ -64,6 +66,8 @@ function App() {
               setEducationData={setEducationData}
               setExperienceData={setExperienceData}
               educationData={educationData}
+              imageDataUri={imageDataUri}
+              setImageDataUri={setImageDataUri}
             />
           }
         />
@@ -77,6 +81,8 @@ function App() {
               setEducationData={setEducationData}
               setExperienceData={setExperienceData}
               educationData={educationData}
+              imageDataUri={imageDataUri}
+              setImageDataUri={setImageDataUri}
             />
           }
         />
@@ -90,6 +96,8 @@ function App() {
               setEducationData={setEducationData}
               setExperienceData={setExperienceData}
               educationData={educationData}
+              imageDataUri={imageDataUri}
+              setImageDataUri={setImageDataUri}
             />
           }
         />

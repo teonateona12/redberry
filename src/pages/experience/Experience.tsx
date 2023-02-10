@@ -19,6 +19,8 @@ interface ExperienseTypes {
   educationData: EducationData;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  imageDataUri: string;
+  setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 }
 const Experience: React.FC<ExperienseTypes> = ({
   setData,
@@ -27,6 +29,8 @@ const Experience: React.FC<ExperienseTypes> = ({
   educationData,
   setEducationData,
   setExperienceData,
+  imageDataUri,
+  setImageDataUri,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -71,6 +75,7 @@ const Experience: React.FC<ExperienseTypes> = ({
           setData={setData}
           setExperienceData={setExperienceData}
           setEducationData={setEducationData}
+          setImageDataUri={setImageDataUri}
         />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -226,6 +231,7 @@ const Experience: React.FC<ExperienseTypes> = ({
         data={data}
         experienceData={experienceData}
         educationData={educationData}
+        imageDataUri={imageDataUri}
       />
     </div>
   );

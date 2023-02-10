@@ -20,6 +20,8 @@ type educationData = {
   educationData: EducationData;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  imageDataUri: string;
+  setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 };
 const Education: React.FC<educationData> = ({
   setData,
@@ -28,6 +30,8 @@ const Education: React.FC<educationData> = ({
   educationData,
   setEducationData,
   setExperienceData,
+  imageDataUri,
+  setImageDataUri,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
@@ -43,7 +47,6 @@ const Education: React.FC<educationData> = ({
 
   const saveData = () => {
     const values: EducationData = getValues();
-    console.log(values);
     setEducationData(values);
     localStorage.setItem("EducationData", JSON.stringify(values));
   };
@@ -73,6 +76,7 @@ const Education: React.FC<educationData> = ({
           setData={setData}
           setExperienceData={setExperienceData}
           setEducationData={setEducationData}
+          setImageDataUri={setImageDataUri}
         />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -226,6 +230,7 @@ const Education: React.FC<educationData> = ({
         data={data}
         experienceData={experienceData}
         educationData={educationData}
+        imageDataUri={imageDataUri}
       />
     </div>
   );

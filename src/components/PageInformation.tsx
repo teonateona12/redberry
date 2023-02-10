@@ -1,13 +1,25 @@
 import React from "react";
 import icon from "../assets/images/icon.svg";
 import { useNavigate } from "react-router-dom";
-
-const PageInformation = ({
+import { EducationData, ExperienceData, PersonalInformation } from "../types";
+type PageInfoTypes = {
+  setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
+  info: Info;
+};
+type Info = {
+  text: string;
+  number: string;
+};
+const PageInformation: React.FC<PageInfoTypes> = ({
   info,
   setData,
   setEducationData,
   setExperienceData,
-}: any) => {
+  setImageDataUri,
+}) => {
   const navigate = useNavigate();
   return (
     <div>
@@ -18,6 +30,7 @@ const PageInformation = ({
             localStorage.removeItem("PersonalData");
             localStorage.removeItem("ExperienceData");
             localStorage.removeItem("EducationData");
+            localStorage.removeItem("image");
             setData({
               firstName: "",
               lastName: "",
@@ -39,6 +52,7 @@ const PageInformation = ({
               startTime: "",
               endTime: "",
             });
+            setImageDataUri("");
           }}
           src={icon}
         />

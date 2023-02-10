@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import email from "../assets/images/email.svg";
 import number from "../assets/images/number.svg";
 import { EducationData, ExperienceData, PersonalInformation } from "../types";
@@ -6,14 +7,20 @@ type ResumeType = {
   data: PersonalInformation;
   experienceData: ExperienceData;
   educationData: EducationData;
+  imageDataUri: string;
 };
 const PageResume: React.FC<ResumeType> = ({
   data,
   experienceData,
   educationData,
+  imageDataUri,
 }) => {
+  const location = useLocation();
+  const path = location.pathname;
+
   return (
     <div className="px-20 py-16">
+      <img src={imageDataUri} />
       <h1 className="text-[#F93B1D] text-3xl font-bold">
         {data.firstName + " " + data.lastName}
       </h1>
@@ -35,7 +42,8 @@ const PageResume: React.FC<ResumeType> = ({
           <p>{data.about}</p>
         </div>
       )}
-      <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+      {path !== "/personal" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
+
       {experienceData.position !== "" && (
         <div className="flex flex-col mt-5">
           <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
@@ -46,7 +54,7 @@ const PageResume: React.FC<ResumeType> = ({
         </div>
       )}
       <p>{experienceData.description}</p>
-      <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+      {path === "/education" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
       {educationData.university !== "" && (
         <div className="flex flex-col mt-5">
           <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
