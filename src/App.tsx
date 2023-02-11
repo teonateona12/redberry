@@ -101,7 +101,17 @@ function App() {
             />
           }
         />
-        <Route path="/resume" element={<Resume />} />
+        <Route
+          path="/resume"
+          element={
+            <Resume
+              setData={setData}
+              setEducationData={setEducationData}
+              setExperienceData={setExperienceData}
+              setImageDataUri={setImageDataUri}
+            />
+          }
+        />
       </Routes>
     </div>
   );

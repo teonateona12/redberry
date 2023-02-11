@@ -166,7 +166,13 @@ const Personal: React.FC<DataTypes> = ({
           </div>
 
           <div className="flex my-5 gap-5">
-            <p>პირადი ფოტოს ატვირთვა</p>
+            <label
+              className={`${
+                !imageDataUri && click ? "text-[#EF5050]" : "text-[#000000]"
+              }`}
+            >
+              პირადი ფოტოს ატვირთვა
+            </label>
             <label
               htmlFor="files"
               className="bg-[#0E80BF] border-0 px-4 rounded text-white"
