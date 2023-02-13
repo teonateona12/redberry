@@ -12,7 +12,7 @@ import {
 type PageResume = {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
-  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 };
 const Resume: React.FC<PageResume> = ({
@@ -47,13 +47,15 @@ const Resume: React.FC<PageResume> = ({
             universityEnd: "",
             educationDesc: "",
           });
-          setExperienceData({
-            position: "",
-            description: "",
-            employer: "",
-            startTime: "",
-            endTime: "",
-          });
+          setExperienceData([
+            {
+              position: "",
+              description: "",
+              employer: "",
+              startTime: "",
+              endTime: "",
+            },
+          ]);
           setImageDataUri("");
         }}
         src={icon}

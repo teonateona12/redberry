@@ -17,13 +17,15 @@ function App() {
     number: "",
     image: null,
   });
-  const [experienceData, setExperienceData] = useState<ExperienceData>({
-    position: "",
-    description: "",
-    employer: "",
-    startTime: "",
-    endTime: "",
-  });
+  const [experienceData, setExperienceData] = useState<ExperienceData[]>([
+    {
+      position: "",
+      description: "",
+      employer: "",
+      startTime: "",
+      endTime: "",
+    },
+  ]);
   const [educationData, setEducationData] = useState<EducationData>({
     university: "",
     degree: "",

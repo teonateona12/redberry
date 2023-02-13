@@ -16,10 +16,10 @@ import { useNavigate } from "react-router-dom";
 interface DataTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
-  experienceData: ExperienceData;
+  experienceData: ExperienceData[];
   educationData: EducationData;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
-  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData>>;
+  setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   imageDataUri: string;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 }

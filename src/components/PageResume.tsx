@@ -6,7 +6,7 @@ import image from "../assets/images/img.png";
 import { EducationData, ExperienceData, PersonalInformation } from "../types";
 type ResumeType = {
   data: PersonalInformation;
-  experienceData: ExperienceData;
+  experienceData: ExperienceData[];
   educationData: EducationData;
   imageDataUri: string;
 };
@@ -44,17 +44,19 @@ const PageResume: React.FC<ResumeType> = ({
           </div>
         )}
         {path !== "/personal" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
-
-        {experienceData.position !== "" && (
-          <div className="flex flex-col mt-5">
-            <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
-            <p className="text-[#1A1A1A] mt-3 font-bold">
-              {experienceData.position + ", " + experienceData.employer}
-            </p>
-            <p>{experienceData.startTime + " " + experienceData.endTime}</p>
+        {experienceData?.map((exp) => (
+          <div>
+            <div className="flex flex-col mt-5">
+              <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
+              <p className="text-[#1A1A1A] mt-3 font-bold">
+                {exp.position + ", " + exp.employer}
+              </p>
+              <p>{exp.startTime + " " + exp.endTime}</p>
+            </div>
+            <p>{exp.description}</p>
           </div>
-        )}
-        <p>{experienceData.description}</p>
+        ))}
+
         {path === "/education" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
         {educationData.university !== "" && (
           <div className="flex flex-col mt-5">
