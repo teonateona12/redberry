@@ -88,7 +88,6 @@ const Experience: React.FC<ExperienseTypes> = ({
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
-
   return (
     <div className="flex">
       <div className="w-7/12">

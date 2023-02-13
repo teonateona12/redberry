@@ -48,6 +48,9 @@ const Education: React.FC<educationData> = ({
     formState: { errors },
   } = useForm<{ educationData: EducationData[] }>({
     resolver: zodResolver(educationScheme),
+    defaultValues: {
+      educationData,
+    },
   });
 
   function changeImageToFile(dataurl: any, filename: string) {

@@ -53,6 +53,7 @@ function App() {
     if (getImage) {
       setImageDataUri(getImage);
     }
+
     const getExperience = localStorage.getItem("ExperienceData" || "");
     if (getExperience) {
       const parse = JSON.parse(getExperience);
@@ -96,6 +97,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="/experience"
           element={
