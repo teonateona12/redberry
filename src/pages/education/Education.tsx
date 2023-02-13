@@ -10,6 +10,7 @@ import axios from "axios";
 import {
   Degree,
   EducationData,
+  EducationDataKey,
   ExperienceData,
   PersonalInformation,
   ResumeData,
@@ -42,10 +43,8 @@ const Education: React.FC<educationData> = ({
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
   const {
-    register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<{ educationData: EducationData[] }>({
     resolver: zodResolver(educationScheme),
@@ -118,48 +117,34 @@ const Education: React.FC<educationData> = ({
       setEducationData(parse);
     }
   }, []);
-  const universityFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+  const changeHandler = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+    property: EducationDataKey
   ) => {
     const clone = [...educationData];
-    clone[index].university = e.target.value;
+    clone[index][property] = e.target.value;
     setValue("educationData", clone);
     setEducationData(clone);
     localStorage.setItem("EducationData", JSON.stringify(educationData));
   };
 
-  const degreeFunc = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    index: number
+  const degreeHandler = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+    property: EducationDataKey
   ) => {
     const clone = [...educationData];
-    clone[index].degree = +e.target.value;
+    clone[index][property] = +e.target.value;
     setValue("educationData", clone);
     setEducationData(clone);
     localStorage.setItem("EducationData", JSON.stringify(educationData));
   };
 
-  const educationDescFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...educationData];
-    clone[index].educationDesc = e.target.value;
-    setValue("educationData", clone);
-    setEducationData(clone);
-    localStorage.setItem("EducationData", JSON.stringify(educationData));
-  };
-  const universityEndFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...educationData];
-    clone[index].universityEnd = e.target.value;
-    setValue("educationData", clone);
-    setEducationData(clone);
-    localStorage.setItem("EducationData", JSON.stringify(educationData));
-  };
   const moreEducation = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -202,7 +187,7 @@ const Education: React.FC<educationData> = ({
                   <input
                     className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
                     placeholder="სასწავლებელი"
-                    onChange={(e) => universityFunc(e, index)}
+                    onChange={(e) => changeHandler(e, index, "university")}
                   ></input>
                   <div className="items-center flex">
                     {!errors.educationData && click && (
@@ -229,10 +214,10 @@ const Education: React.FC<educationData> = ({
                     <select
                       className="px-2 py-3 w-full border-2 border-[#BCBCBC] rounded"
                       placeholder="აირჩიეთ ხარისხი"
-                      onChange={(e) => degreeFunc(e, index)}
+                      onChange={(e) => degreeHandler(e, index, "degree")}
                     >
                       <option>აირჩიეთ ხარისხი</option>
-                      {degree?.map((index, deg) => (
+                      {degree?.map((index) => (
                         <option value={index.id}>{index.title}</option>
                       ))}
                     </select>
@@ -254,7 +239,7 @@ const Education: React.FC<educationData> = ({
                     <input
                       className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
                       type="date"
-                      onChange={(e) => universityEndFunc(e, index)}
+                      onChange={(e) => changeHandler(e, index, "universityEnd")}
                     ></input>
 
                     {<img src={errors.educationData && `${error}`} />}
@@ -274,7 +259,7 @@ const Education: React.FC<educationData> = ({
                   <input
                     className="w-full pl-2 pt-2 pb-24 border-2 border-[#BCBCBC] rounded"
                     placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
-                    onChange={(e) => educationDescFunc(e, index)}
+                    onChange={(e) => changeHandler(e, index, "educationDesc")}
                   ></input>
                   <div className="items-center flex">
                     {!errors.educationData && click && (

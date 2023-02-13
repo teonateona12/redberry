@@ -7,6 +7,7 @@ import succes from "../../assets/images/succes.svg";
 import {
   EducationData,
   ExperienceData,
+  ExperienceDataKey,
   PersonalInformation,
 } from "../../types";
 import PageResume from "../../components/PageResume";
@@ -22,7 +23,6 @@ interface ExperienseTypes {
   imageDataUri: string;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
 }
-
 const Experience: React.FC<ExperienseTypes> = ({
   setData,
   data,
@@ -33,14 +33,11 @@ const Experience: React.FC<ExperienseTypes> = ({
   imageDataUri,
   setImageDataUri,
 }) => {
-  console.log(experienceData);
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
   const {
-    // register,
     handleSubmit,
     setValue,
-    // getValues,
     formState: { errors },
   } = useForm<{ experienceData: ExperienceData[] }>({
     resolver: zodResolver(experienceScheme),
@@ -53,10 +50,7 @@ const Experience: React.FC<ExperienseTypes> = ({
     setClick(true);
   };
 
-  const onSubmit: SubmitHandler<{ experienceData: ExperienceData[] }> = (
-    data
-  ) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<{ experienceData: ExperienceData[] }> = () => {
     navigate("/education");
   };
 
@@ -83,56 +77,18 @@ const Experience: React.FC<ExperienseTypes> = ({
       },
     ]);
   };
-  const startTimeFunc = (
+  const changeHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
+    property: ExperienceDataKey
   ) => {
     const clone = [...experienceData];
-    clone[index].startTime = e.target.value;
+    clone[index][property] = e.target.value;
     setValue("experienceData", clone);
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
-  const employerFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...experienceData];
-    clone[index].employer = e.target.value;
-    setValue("experienceData", clone);
-    setExperienceData(clone);
-    localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
-  };
-  const positionFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...experienceData];
-    clone[index].position = e.target.value;
-    setExperienceData(clone);
-    setValue("experienceData", clone);
-    localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
-  };
-  const endTimeFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...experienceData];
-    clone[index].endTime = e.target.value;
-    setValue("experienceData", clone);
-    setExperienceData(clone);
-    localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
-  };
-  const descriptionFunc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const clone = [...experienceData];
-    clone[index].description = e.target.value;
-    setValue("experienceData", clone);
-    setExperienceData(clone);
-    localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
-  };
+
   return (
     <div className="flex">
       <div className="w-7/12">
@@ -162,7 +118,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                   <input
                     className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
                     placeholder="დეველოპერი, დიზაინერი, ა.შ."
-                    onChange={(e) => positionFunc(e, index)}
+                    onChange={(e) => changeHandler(e, index, "position")}
                   ></input>
                   <div className="items-center flex">
                     {!errors.experienceData && click && (
@@ -190,7 +146,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                   <input
                     className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
                     placeholder="დამსაქმებელი"
-                    onChange={(e) => employerFunc(e, index)}
+                    onChange={(e) => changeHandler(e, index, "employer")}
                   ></input>
                   <div className="items-center flex">
                     {!errors.experienceData && click && (
@@ -213,7 +169,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                       <input
                         type="date"
                         className="px-2 py-3 w-full border-2 border-[#BCBCBC] rounded"
-                        onChange={(e) => startTimeFunc(e, index)}
+                        onChange={(e) => changeHandler(e, index, "startTime")}
                       ></input>
                     </div>
                     {<img src={errors.experienceData && `${error}`} />}
@@ -227,7 +183,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                       <input
                         type="date"
                         className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
-                        onChange={(e) => endTimeFunc(e, index)}
+                        onChange={(e) => changeHandler(e, index, "endTime")}
                       ></input>
                     </div>
                     {<img src={errors.experienceData && `${error}`} />}
@@ -248,7 +204,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                   <input
                     className="w-full pl-2 pt-2 pb-24 border-2 border-[#BCBCBC] rounded"
                     placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
-                    onChange={(e) => descriptionFunc(e, index)}
+                    onChange={(e) => changeHandler(e, index, "description")}
                   ></input>
                   <div className="items-center flex">
                     {!errors.experienceData && click && (

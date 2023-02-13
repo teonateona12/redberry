@@ -13,7 +13,8 @@ export interface ExperienceData {
   startTime: string;
   endTime: string;
 }
-
+export type ExperienceDataKey = keyof ExperienceData;
+export type EducationDataKey = keyof EducationData;
 export interface EducationData {
   university: string;
   degree: any;
