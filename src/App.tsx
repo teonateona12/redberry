@@ -6,12 +6,18 @@ import Home from "./pages/home/Home";
 import Personal from "./pages/personal/Personal";
 import Resume from "./pages/resume/Resume";
 import axios from "axios";
-import { EducationData, ExperienceData, PersonalInformation } from "./types";
+import {
+  Degree,
+  EducationData,
+  ExperienceData,
+  PersonalInformation,
+  ResumeData,
+} from "./types";
 
 function App() {
   const [imageDataUri, setImageDataUri] = useState<string>("");
-  const [resume, setResume] = useState<any>();
-  const [degree, setDegree] = useState<any>();
+  const [resume, setResume] = useState<ResumeData>();
+  const [degree, setDegree] = useState<Degree[]>();
   const [data, setData] = useState<PersonalInformation>({
     firstName: "",
     lastName: "",

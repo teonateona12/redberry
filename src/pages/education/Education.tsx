@@ -8,9 +8,11 @@ import PageResume from "../../components/PageResume";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
+  Degree,
   EducationData,
   ExperienceData,
   PersonalInformation,
+  ResumeData,
 } from "../../types";
 import { educationScheme } from "../../schemas/educationSchema";
 type educationData = {
@@ -22,8 +24,8 @@ type educationData = {
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   imageDataUri: string;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
-  setResume: any;
-  degree: any;
+  setResume: React.Dispatch<React.SetStateAction<ResumeData | undefined>>;
+  degree: Degree[] | undefined;
 };
 const Education: React.FC<educationData> = ({
   setData,
@@ -230,7 +232,7 @@ const Education: React.FC<educationData> = ({
                       onChange={(e) => degreeFunc(e, index)}
                     >
                       <option>აირჩიეთ ხარისხი</option>
-                      {degree?.map((index: any, deg: any) => (
+                      {degree?.map((index, deg) => (
                         <option value={index.id}>{index.title}</option>
                       ))}
                     </select>

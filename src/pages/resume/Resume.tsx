@@ -8,13 +8,14 @@ import {
   EducationData,
   ExperienceData,
   PersonalInformation,
+  ResumeData,
 } from "../../types";
 type PageResume = {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   setEducationData: React.Dispatch<React.SetStateAction<EducationData[]>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
-  resume: any;
+  resume: ResumeData | undefined;
   imageDataUri: string;
 };
 const Resume: React.FC<PageResume> = ({
@@ -72,26 +73,26 @@ const Resume: React.FC<PageResume> = ({
         <div className="flex px-20 py-16">
           <div className="">
             <h1 className="text-[#F93B1D] text-3xl font-bold">
-              {`${resume.name} ${resume.surname}`}
+              {`${resume?.name} ${resume?.surname}`}
             </h1>
 
             <div className="flex gap-2 mt-5">
               <img src={email} />
-              <p>{resume.email}</p>
+              <p>{resume?.email}</p>
             </div>
 
             <div className="flex gap-2">
               <img src={number} />
-              <p>{resume.phone_number}</p>
+              <p>{resume?.phone_number}</p>
             </div>
 
             <div className="flex flex-col gap-3 mt-5">
               <p className="font-bold text-[#F93B1D]">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</p>
-              <p>{resume.about_me}</p>
+              <p>{resume?.about_me}</p>
             </div>
 
             <div className="h-1 my-5 bg-[#C1C1C1]"></div>
-            {resume.experiences.map((exp: any) => (
+            {resume?.experiences.map((exp) => (
               <>
                 <div className="flex flex-col mt-5">
                   <p className="font-bold text-[#F93B1D]">{`${exp.position}, ${exp.employer}`}</p>
@@ -104,11 +105,11 @@ const Resume: React.FC<PageResume> = ({
             ))}
 
             <div className="h-1 my-5 bg-[#C1C1C1]"></div>
-            {resume.educations.map((edc: any) => (
+            {resume?.educations.map((edc) => (
               <>
                 <div className="flex flex-col mt-5">
                   <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
-                  <p className="text-[#1A1A1A] mt-3 font-bold">{`${edc.institute}, ${edc.degree_id}`}</p>
+                  <p className="text-[#1A1A1A] mt-3 font-bold">{`${edc.institute}, ${edc.degree}`}</p>
                   <p>{edc.due_date}</p>
                 </div>
 
