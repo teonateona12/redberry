@@ -16,7 +16,7 @@ export interface ExperienceData {
 
 export interface EducationData {
   university: string;
-  degree: string;
+  degree: any;
   universityEnd: string;
   educationDesc: string;
 }

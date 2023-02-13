@@ -7,7 +7,7 @@ import { EducationData, ExperienceData, PersonalInformation } from "../types";
 type ResumeType = {
   data: PersonalInformation;
   experienceData: ExperienceData[];
-  educationData: EducationData;
+  educationData: EducationData[];
   imageDataUri: string;
 };
 const PageResume: React.FC<ResumeType> = ({
@@ -18,7 +18,6 @@ const PageResume: React.FC<ResumeType> = ({
 }) => {
   const location = useLocation();
   const path = location.pathname;
-
   return (
     <div className="flex px-20 py-16">
       <div className="w-[50%] relative">
@@ -44,30 +43,40 @@ const PageResume: React.FC<ResumeType> = ({
           </div>
         )}
         {path !== "/personal" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
-        {experienceData?.map((exp) => (
-          <div>
-            <div className="flex flex-col mt-5">
-              <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
-              <p className="text-[#1A1A1A] mt-3 font-bold">
-                {exp.position + ", " + exp.employer}
-              </p>
-              <p>{exp.startTime + " " + exp.endTime}</p>
-            </div>
-            <p>{exp.description}</p>
-          </div>
-        ))}
+
+        {experienceData?.map(
+          (exp) =>
+            exp.position && (
+              <div>
+                <div className="flex flex-col mt-5">
+                  <p className="font-bold text-[#F93B1D]">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</p>
+                  <p className="text-[#1A1A1A] mt-3 font-bold">
+                    {exp.position + ", " + exp.employer}
+                  </p>
+                  <p>{exp.startTime + " " + exp.endTime}</p>
+                </div>
+                <p>{exp.description}</p>
+              </div>
+            )
+        )}
 
         {path === "/education" && <div className="h-1 my-5 bg-[#C1C1C1]"></div>}
-        {educationData.university !== "" && (
-          <div className="flex flex-col mt-5">
-            <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
-            <p className="text-[#1A1A1A] mt-3 font-bold">
-              {educationData.university + ", " + educationData.degree}
-            </p>
-            <p>{educationData.universityEnd}</p>
-          </div>
+        {educationData?.map(
+          (edc) =>
+            edc.university && (
+              <div>
+                <div className="flex flex-col mt-5">
+                  <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
+                  <p className="text-[#1A1A1A] mt-3 font-bold">
+                    {edc.university + ", " + edc.degree}
+                  </p>
+                  <p>{edc.universityEnd}</p>
+                </div>
+                <p>{edc.educationDesc}</p>
+              </div>
+            )
         )}
-        <p>{educationData.educationDesc}</p>
+
         <div className="absolute bottom-0">
           <img src={image} />
         </div>

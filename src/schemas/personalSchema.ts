@@ -12,10 +12,6 @@ export const personalSchema = z.object({
     .min(2)
     .regex(/^[ა-ჰ]+$/g),
   email: z.string().endsWith("@redberry.ge"),
-  number: z
-    .string()
-    .trim()
-    .min(2)
-    .regex(/^\+995\s5\d{2}\s\d{2}\s\d{2}\s\d{2}$/),
+  number: z.string().trim().min(2),
   about: z.string().optional(),
 });

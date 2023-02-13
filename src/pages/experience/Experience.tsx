@@ -16,8 +16,8 @@ interface ExperienseTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
   experienceData: ExperienceData[];
-  educationData: EducationData;
-  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  educationData: EducationData[];
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData[]>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   imageDataUri: string;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
@@ -33,30 +33,30 @@ const Experience: React.FC<ExperienseTypes> = ({
   imageDataUri,
   setImageDataUri,
 }) => {
+  console.log(experienceData);
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
   const {
-    register,
+    // register,
     handleSubmit,
     setValue,
-    getValues,
+    // getValues,
     formState: { errors },
-  } = useForm<ExperienceData>({
+  } = useForm<{ experienceData: ExperienceData[] }>({
     resolver: zodResolver(experienceScheme),
+    defaultValues: {
+      experienceData,
+    },
   });
-  const saveData = () => {
-    const values: ExperienceData = getValues();
-    setExperienceData([...experienceData, values]);
-    localStorage.setItem(
-      "ExperienceData",
-      JSON.stringify([...experienceData, values])
-    );
-  };
 
   const clickButton = () => {
     setClick(true);
   };
-  const onSubmit: SubmitHandler<ExperienceData> = () => {
+
+  const onSubmit: SubmitHandler<{ experienceData: ExperienceData[] }> = (
+    data
+  ) => {
+    console.log(data);
     navigate("/education");
   };
 
@@ -65,11 +65,6 @@ const Experience: React.FC<ExperienseTypes> = ({
     if (getItem) {
       const parse = JSON.parse(getItem);
       setExperienceData(parse);
-      setValue("position", parse.position);
-      setValue("employer", parse.employer);
-      setValue("startTime", parse.startTime);
-      setValue("endTime", parse.endTime);
-      setValue("description", parse.description);
     }
   }, []);
 
@@ -77,7 +72,6 @@ const Experience: React.FC<ExperienseTypes> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-
     setExperienceData([
       ...experienceData,
       {
@@ -95,6 +89,7 @@ const Experience: React.FC<ExperienseTypes> = ({
   ) => {
     const clone = [...experienceData];
     clone[index].startTime = e.target.value;
+    setValue("experienceData", clone);
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
@@ -104,6 +99,7 @@ const Experience: React.FC<ExperienseTypes> = ({
   ) => {
     const clone = [...experienceData];
     clone[index].employer = e.target.value;
+    setValue("experienceData", clone);
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
@@ -114,6 +110,7 @@ const Experience: React.FC<ExperienseTypes> = ({
     const clone = [...experienceData];
     clone[index].position = e.target.value;
     setExperienceData(clone);
+    setValue("experienceData", clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
   const endTimeFunc = (
@@ -122,6 +119,7 @@ const Experience: React.FC<ExperienseTypes> = ({
   ) => {
     const clone = [...experienceData];
     clone[index].endTime = e.target.value;
+    setValue("experienceData", clone);
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
@@ -131,6 +129,7 @@ const Experience: React.FC<ExperienseTypes> = ({
   ) => {
     const clone = [...experienceData];
     clone[index].description = e.target.value;
+    setValue("experienceData", clone);
     setExperienceData(clone);
     localStorage.setItem("ExperienceData", JSON.stringify(experienceData));
   };
@@ -148,12 +147,12 @@ const Experience: React.FC<ExperienseTypes> = ({
           onSubmit={handleSubmit(onSubmit)}
           className="pl-28 pr-16 flex flex-col gap-6"
         >
-          {experienceData?.map((item: any, index: number) => (
+          {experienceData.map((item, index) => (
             <div>
               <div className="flex flex-col gap-2">
                 <label
                   className={`${
-                    errors.position ? "text-[#EF5050]" : "text-[#000000]"
+                    errors.experienceData ? "text-[#EF5050]" : "text-[#000000]"
                   }`}
                 >
                   თანამდებობა
@@ -163,16 +162,15 @@ const Experience: React.FC<ExperienseTypes> = ({
                   <input
                     className="px-2 py-3 w-full border-2	border-[#BCBCBC] rounded"
                     placeholder="დეველოპერი, დიზაინერი, ა.შ."
-                    id={`item.name` + index}
                     onChange={(e) => positionFunc(e, index)}
                   ></input>
                   <div className="items-center flex">
-                    {!errors.position && click && (
+                    {!errors.experienceData && click && (
                       <img className="absolute right-2" src={succes} />
                     )}
                   </div>
 
-                  {<img src={errors.position && `${error}`} />}
+                  {<img src={errors.experienceData && `${error}`} />}
                 </div>
                 <small className="font-light color-[#2E2E2E]">
                   მინიმუმ 2 სიმბოლო
@@ -182,7 +180,7 @@ const Experience: React.FC<ExperienseTypes> = ({
               <div className="flex flex-col gap-2">
                 <label
                   className={`${
-                    errors.employer ? "text-[#EF5050]" : "text-[#000000]"
+                    errors.experienceData ? "text-[#EF5050]" : "text-[#000000]"
                   }`}
                 >
                   დამსაქმებელი
@@ -195,12 +193,12 @@ const Experience: React.FC<ExperienseTypes> = ({
                     onChange={(e) => employerFunc(e, index)}
                   ></input>
                   <div className="items-center flex">
-                    {!errors.employer && click && (
+                    {!errors.experienceData && click && (
                       <img className="absolute right-2" src={succes} />
                     )}
                   </div>
 
-                  {<img src={errors.employer && `${error}`} />}
+                  {<img src={errors.experienceData && `${error}`} />}
                 </div>
                 <small className="font-light color-[#2E2E2E]">
                   მინიმუმ 2 სიმბოლო
@@ -218,7 +216,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                         onChange={(e) => startTimeFunc(e, index)}
                       ></input>
                     </div>
-                    {<img src={errors.startTime && `${error}`} />}
+                    {<img src={errors.experienceData && `${error}`} />}
                   </div>
                 </div>
 
@@ -232,7 +230,7 @@ const Experience: React.FC<ExperienseTypes> = ({
                         onChange={(e) => endTimeFunc(e, index)}
                       ></input>
                     </div>
-                    {<img src={errors.endTime && `${error}`} />}
+                    {<img src={errors.experienceData && `${error}`} />}
                   </div>
                 </div>
               </div>
@@ -240,7 +238,7 @@ const Experience: React.FC<ExperienseTypes> = ({
               <div className="flex flex-col gap-2">
                 <label
                   className={`${
-                    errors.description ? "text-[#EF5050]" : "text-[#000000]"
+                    errors.experienceData ? "text-[#EF5050]" : "text-[#000000]"
                   }`}
                 >
                   აღწერა
@@ -253,12 +251,12 @@ const Experience: React.FC<ExperienseTypes> = ({
                     onChange={(e) => descriptionFunc(e, index)}
                   ></input>
                   <div className="items-center flex">
-                    {!errors.description && click && (
+                    {!errors.experienceData && click && (
                       <img className="absolute right-2" src={succes} />
                     )}
                   </div>
 
-                  {<img src={errors.description && `${error}`} />}
+                  {<img src={errors.experienceData && `${error}`} />}
                 </div>
               </div>
 

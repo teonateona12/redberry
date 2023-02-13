@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { EducationData, ExperienceData, PersonalInformation } from "../types";
 type PageInfoTypes = {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
-  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData[]>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
   info: Info;
@@ -39,12 +39,14 @@ const PageInformation: React.FC<PageInfoTypes> = ({
               number: "",
               image: null,
             });
-            setEducationData({
-              university: "",
-              degree: "",
-              universityEnd: "",
-              educationDesc: "",
-            });
+            setEducationData([
+              {
+                university: "",
+                degree: "",
+                universityEnd: "",
+                educationDesc: "",
+              },
+            ]);
             setExperienceData([
               {
                 position: "",

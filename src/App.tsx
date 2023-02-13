@@ -5,10 +5,13 @@ import Experience from "./pages/experience/Experience";
 import Home from "./pages/home/Home";
 import Personal from "./pages/personal/Personal";
 import Resume from "./pages/resume/Resume";
+import axios from "axios";
 import { EducationData, ExperienceData, PersonalInformation } from "./types";
 
 function App() {
   const [imageDataUri, setImageDataUri] = useState<string>("");
+  const [resume, setResume] = useState<any>();
+  const [degree, setDegree] = useState<any>();
   const [data, setData] = useState<PersonalInformation>({
     firstName: "",
     lastName: "",
@@ -26,12 +29,14 @@ function App() {
       endTime: "",
     },
   ]);
-  const [educationData, setEducationData] = useState<EducationData>({
-    university: "",
-    degree: "",
-    universityEnd: "",
-    educationDesc: "",
-  });
+  const [educationData, setEducationData] = useState<EducationData[]>([
+    {
+      university: "",
+      degree: "",
+      universityEnd: "",
+      educationDesc: "",
+    },
+  ]);
   useEffect(() => {
     const getItem = localStorage.getItem("PersonalData" || "");
     if (getItem) {
@@ -53,7 +58,19 @@ function App() {
       setEducationData(parse);
     }
   }, []);
-
+  useEffect(() => {
+    const getDegree = async () => {
+      try {
+        const response = await axios.get(
+          "https://resume.redberryinternship.ge/api/degrees"
+        );
+        setDegree(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDegree();
+  }, []);
   return (
     <div>
       <Routes>
@@ -100,6 +117,8 @@ function App() {
               educationData={educationData}
               imageDataUri={imageDataUri}
               setImageDataUri={setImageDataUri}
+              setResume={setResume}
+              degree={degree}
             />
           }
         />
@@ -111,6 +130,8 @@ function App() {
               setEducationData={setEducationData}
               setExperienceData={setExperienceData}
               setImageDataUri={setImageDataUri}
+              resume={resume}
+              imageDataUri={imageDataUri}
             />
           }
         />

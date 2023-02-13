@@ -11,18 +11,24 @@ import {
 } from "../../types";
 type PageResume = {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
-  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData[]>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
+  resume: any;
+  imageDataUri: string;
 };
 const Resume: React.FC<PageResume> = ({
   setData,
   setEducationData,
   setExperienceData,
   setImageDataUri,
+  resume,
+  imageDataUri,
 }) => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
+  console.log(resume);
+
   return (
     <div className="mt-20 relative">
       <img
@@ -41,12 +47,14 @@ const Resume: React.FC<PageResume> = ({
             number: "",
             image: null,
           });
-          setEducationData({
-            university: "",
-            degree: "",
-            universityEnd: "",
-            educationDesc: "",
-          });
+          setEducationData([
+            {
+              university: "",
+              degree: "",
+              universityEnd: "",
+              educationDesc: "",
+            },
+          ]);
           setExperienceData([
             {
               position: "",
@@ -63,47 +71,60 @@ const Resume: React.FC<PageResume> = ({
       <div className="border-2 border-black w-[800px] m-auto ">
         <div className="flex px-20 py-16">
           <div className="">
-            <h1 className="text-[#F93B1D] text-3xl font-bold"></h1>
+            <h1 className="text-[#F93B1D] text-3xl font-bold">
+              {`${resume.name} ${resume.surname}`}
+            </h1>
 
             <div className="flex gap-2 mt-5">
               <img src={email} />
-              <p></p>
+              <p>{resume.email}</p>
             </div>
 
             <div className="flex gap-2">
               <img src={number} />
-              <p></p>
+              <p>{resume.phone_number}</p>
             </div>
 
             <div className="flex flex-col gap-3 mt-5">
               <p className="font-bold text-[#F93B1D]">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</p>
-              <p></p>
+              <p>{resume.about_me}</p>
             </div>
 
             <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+            {resume.experiences.map((exp: any) => (
+              <>
+                <div className="flex flex-col mt-5">
+                  <p className="font-bold text-[#F93B1D]">{`${exp.position}, ${exp.employer}`}</p>
+                  <p className="text-[#1A1A1A] mt-3 font-bold">{`${exp.start_date} ${exp.due_date}`}</p>
+                  <p>{exp.description}</p>
+                </div>
 
-            <div className="flex flex-col mt-5">
-              <p className="font-bold text-[#F93B1D]"></p>
-              <p className="text-[#1A1A1A] mt-3 font-bold"></p>
-              <p></p>
-            </div>
+                <p></p>
+              </>
+            ))}
 
-            <p></p>
             <div className="h-1 my-5 bg-[#C1C1C1]"></div>
+            {resume.educations.map((edc: any) => (
+              <>
+                <div className="flex flex-col mt-5">
+                  <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
+                  <p className="text-[#1A1A1A] mt-3 font-bold">{`${edc.institute}, ${edc.degree_id}`}</p>
+                  <p>{edc.due_date}</p>
+                </div>
 
-            <div className="flex flex-col mt-5">
-              <p className="font-bold text-[#F93B1D]"> ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</p>
-              <p className="text-[#1A1A1A] mt-3 font-bold"></p>
-              <p></p>
-            </div>
+                <p>{edc.description}</p>
+              </>
+            ))}
 
-            <p></p>
             <div className="mt-[70%]">
               <img src={image} />
             </div>
           </div>
           <div>
-            <img className="w-[246px] h-[246px] rounded-[126px]" />
+            <img
+              className="w-[246px] h-[246px] rounded-[126px]"
+              src={imageDataUri}
+            />
           </div>
         </div>
       </div>

@@ -17,8 +17,8 @@ interface DataTypes {
   setData: React.Dispatch<React.SetStateAction<PersonalInformation>>;
   data: PersonalInformation;
   experienceData: ExperienceData[];
-  educationData: EducationData;
-  setEducationData: React.Dispatch<React.SetStateAction<EducationData>>;
+  educationData: EducationData[];
+  setEducationData: React.Dispatch<React.SetStateAction<EducationData[]>>;
   setExperienceData: React.Dispatch<React.SetStateAction<ExperienceData[]>>;
   imageDataUri: string;
   setImageDataUri: React.Dispatch<React.SetStateAction<string>>;
